@@ -1,3 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "tailwindcss";
+/* Global theme */
+body {
+  @apply bg-gray-950 text-gray-200;
+}
+
+/* Global link behavior */
+a {
+  @apply transition-colors duration-200;
+}
+
+/* Reusable button styles */
+.btn-primary {
+  @apply bg-orange-500 hover:bg-orange-600 text-black font-semibold px-6 py-3 rounded-lg;
+}
+
+.btn-outline {
+  @apply border border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black px-6 py-3 rounded-lg;
+}
+html {
+  scroll-behavior: smooth;
+}
+.skill-pill {
+  @apply px-5 py-2 rounded-full
+         bg-gray-800 text-gray-300
+         border border-gray-700
+         hover:border-orange-500 hover:text-white
+         transition text-sm;
+}
+

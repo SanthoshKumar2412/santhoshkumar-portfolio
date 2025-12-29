@@ -1,0 +1,50 @@
+
+
+  <nav
+    class="fixed top-0 left-0 w-full
+           px-4 sm:px-6 lg:px-[80px]
+           py-4 sm:py-5 lg:py-7
+           flex justify-between items-center
+           text-gray-300 z-50">
+
+
+    <!-- Logo -->
+    <div class="text-white font-bold text-lg">
+      Santhoshkumar Raman
+    </div>
+
+    <!-- Desktop Menu -->
+    <ul class="hidden md:flex gap-8">
+      <li><a href="#home" class="hover:text-orange-400">Home</a></li>
+      <li><a href="#about" class="hover:text-orange-400">About</a></li>
+      <li><a href="#projects" class="hover:text-orange-400">Projects</a></li>
+      <li><a href="#contact" class="hover:text-orange-400">Contact</a></li>
+    </ul>
+
+    <!-- Mobile Menu Button -->
+    <button
+      class="md:hidden text-white text-2xl"
+      (click)="toggleMenu()">
+      ☰
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div
+  *ngIf="menuOpen()"
+  class="fixed top-[72px] left-0 w-full
+         bg-gray-950/95 backdrop-blur
+         px-4 py-6
+         md:hidden z-50">
+
+
+    <div class="flex flex-col gap-5 text-gray-300">
+      <!-- ⚠️ USE href, NOT routerLink -->
+      <a href="#home" (click)="closeMenu()" class="hover:text-orange-400">Home</a>
+      <a href="#about" (click)="closeMenu()" class="hover:text-orange-400">About</a>
+      <a href="#projects" (click)="closeMenu()" class="hover:text-orange-400">Projects</a>
+      <a href="#contact" (click)="closeMenu()" class="hover:text-orange-400">Contact</a>
+    </div>
+  </div>
+
+
