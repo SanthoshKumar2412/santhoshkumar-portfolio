@@ -1,1 +1,144 @@
-<p>contact works!</p>
+<section
+  id="contact"
+  class="bg-[#0e1b26] text-white pt-28 pb-16 scroll-mt-28"
+>
+  <div class="max-w-7xl mx-auto px-6 lg:px-20">
+
+    <!-- HEADER -->
+    <div class="mb-8">
+      <h1 class="text-4xl lg:text-5xl font-bold">Contact</h1>
+
+      <div class="mt-4 flex justify-start">
+        <span class="h-[2px] w-14 bg-orange-500/60 rounded-full"></span>
+      </div>
+
+      <p class="mt-2 text-gray-400 max-w-2xl">
+        Feel free to reach out for job opportunities, projects,
+        or collaborations.
+      </p>
+    </div>
+
+    <!-- CONTENT GRID -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+
+      <!-- LEFT : INFO -->
+      <div class="flex flex-col justify-between">
+
+        <div>
+          <p class="text-gray-400 leading-relaxed max-w-md">
+            I’m actively looking for entry-level software developer roles
+            and open to freelance or project-based work.
+            Let’s build something great together.
+          </p>
+
+          <!-- INFO LIST -->
+          <div class="mt-8 space-y-4 text-sm">
+
+            <div class="flex items-center gap-3">
+              <span class="text-orange-500">✉</span>
+              <span class="text-gray-300">santhoshkumar@email.com</span>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <span class="text-orange-500">📍</span>
+              <span class="text-gray-300">Tamil Nadu, India</span>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <span class="text-orange-500">💼</span>
+              <span class="text-gray-300">Open to Work</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- SOCIAL LINKS -->
+        <div class="mt-8 flex gap-12 text-sm">
+
+          <a
+            href="https://github.com/SanthoshKumar2412"
+            target="_blank"
+            class="flex flex-col items-center gap-2
+                   text-gray-400 hover:text-orange-500 transition"
+          >
+            <span>GitHub</span>
+            <i class="fa-brands fa-github text-2xl"></i>
+          </a>
+
+          <a
+            href="https://www.linkedin.com/in/santhoshkumar-r-b06030252"
+            target="_blank"
+            class="flex flex-col items-center gap-2
+                   text-gray-400 hover:text-orange-500 transition"
+          >
+            <span>LinkedIn</span>
+            <i class="fa-brands fa-linkedin-in text-2xl"></i>
+          </a>
+
+          <a
+            href="mailto:santhoshkumar2002.raman@email.com"
+            class="flex flex-col items-center gap-2
+                   text-gray-400 hover:text-orange-500 transition"
+          >
+            <span>Email</span>
+            <i class="fa-solid fa-envelope text-2xl"></i>
+          </a>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT : FORM -->
+      <div class="flex">
+        <form
+          [formGroup]="contactForm"
+          (ngSubmit)="submitForm()"
+          class="bg-[#182329] rounded-xl p-6 flex flex-col w-full"
+        >
+
+          <div class="space-y-5 flex-1">
+
+            <input
+              type="text"
+              placeholder="Your Name"
+              formControlName="name"
+              class="w-full bg-transparent border border-white/10
+                     px-4 py-3 rounded-md text-sm
+                     focus:outline-none focus:border-orange-500"
+            />
+
+            <input
+              type="email"
+              placeholder="Your Email"
+              formControlName="email"
+              class="w-full bg-transparent border border-white/10
+                     px-4 py-3 rounded-md text-sm
+                     focus:outline-none focus:border-orange-500"
+            />
+
+            <textarea
+              rows="4"
+              placeholder="Your Message"
+              formControlName="message"
+              class="w-full bg-transparent border border-white/10
+                     px-4 py-3 rounded-md text-sm
+                     focus:outline-none focus:border-orange-500 resize-none"
+            ></textarea>
+
+          </div>
+
+          <button
+            type="submit"
+            class="mt-6 bg-orange-500 hover:bg-orange-600
+                   text-black font-semibold px-6 py-3 rounded-md transition"
+          >
+            Send Message
+          </button>
+
+        </form>
+      </div>
+
+    </div> <!-- END GRID -->
+
+  </div> <!-- END CONTAINER -->
+</section>

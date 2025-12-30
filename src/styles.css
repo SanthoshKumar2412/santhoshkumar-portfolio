@@ -30,3 +30,20 @@ html {
          transition text-sm;
 }
 
+.skill-tag {
+  padding: 0.4rem 0.9rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(249, 115, 22, 0.35); /* orange-500 */
+  color: #d1d5db; /* gray-300 */
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.skill-tag:hover {
+  color: #f97316;
+  border-color: #f97316;
+}
+
+:root {
+  scroll-padding-top: 96px;
+}

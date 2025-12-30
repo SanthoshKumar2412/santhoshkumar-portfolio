@@ -1,25 +1,36 @@
 import { NgIf } from '@angular/common';
-import { Component, signal } from '@angular/core';
-import { Router, RouterLink, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Component, HostListener, signal } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
-  imports: [NgIf],
   standalone: true,
+  imports: [NgIf],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
 export class Navbar {
+
+  // Mobile menu state
   menuOpen = signal(false);
-toggleMenu() {
-  this.menuOpen.set(!this.menuOpen());
-  document.body.style.overflow = this.menuOpen() ? 'hidden' : '';
-}
 
-closeMenu() {
-  this.menuOpen.set(false);
-  document.body.style.overflow = '';
-}
+  // Scroll state
+  isScrolled = false;
 
+  // Detect scroll for navbar background change
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.isScrolled = window.scrollY > 50;
+  }
+
+  // Toggle mobile menu
+  toggleMenu() {
+    this.menuOpen.set(!this.menuOpen());
+    document.body.style.overflow = this.menuOpen() ? 'hidden' : '';
+  }
+
+  // Close mobile menu
+  closeMenu() {
+    this.menuOpen.set(false);
+    document.body.style.overflow = '';
+  }
 }
