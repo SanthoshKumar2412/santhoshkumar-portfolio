@@ -1,19 +1,21 @@
 nav {
-  transform: translateY(-10px);
-  opacity: 0.9;
+  background: transparent;
+  opacity: 1;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  line-height: 1.2; /* IMPORTANT */
 }
 
 .nav-scrolled {
-  transform: translateY(0);
-  opacity: 1;
-  background-color: #0b1620;
+  background-color: rgba(11, 22, 32, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
 }
-/* navbar.css */
-a:focus,
-a:active {
-  outline: none;
-  box-shadow: none;
+
+.nav-link {
+  position: relative;
+  line-height: 1;
 }
+
 .nav-link::after {
   content: '';
   position: absolute;
@@ -29,3 +31,15 @@ a:active {
   width: 100%;
 }
 
+a:focus,
+a:active {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Optional mobile optimization */
+@media (max-width: 640px) {
+  .nav-scrolled {
+    backdrop-filter: none;
+  }
+}

@@ -1,7 +1,7 @@
-<section
-  id="contact"
-  class="bg-[#0e1b26] text-white pt-28 pb-16 scroll-mt-28"
->
+
+<section id="contact"
+  class="bg-[#0e1b26] text-white pb-20 pt-15 ">
+
   <div class="max-w-7xl mx-auto px-6 lg:px-20">
 
     <!-- HEADER -->
@@ -36,12 +36,13 @@
 
             <div class="flex items-center gap-3">
               <span class="text-orange-500">✉</span>
-              <span class="text-gray-300">santhoshkumar@email.com</span>
+              <span class="text-gray-300">santhoshkumar2002.raman@email.com</span>
             </div>
 
             <div class="flex items-center gap-3">
               <span class="text-orange-500">📍</span>
-              <span class="text-gray-300">Tamil Nadu, India</span>
+              <span class="text-gray-300">Bengaluru, Karnataka, India
+</span>
             </div>
 
             <div class="flex items-center gap-3">
@@ -75,14 +76,19 @@
             <i class="fa-brands fa-linkedin-in text-2xl"></i>
           </a>
 
-          <a
-            href="mailto:santhoshkumar2002.raman@email.com"
-            class="flex flex-col items-center gap-2
-                   text-gray-400 hover:text-orange-500 transition"
-          >
-            <span>Email</span>
-            <i class="fa-solid fa-envelope text-2xl"></i>
-          </a>
+         <a href="https://mail.google.com/mail/?view=cm&fs=1&to=santhoshkumar2002.raman@gmail.com" 
+            target="_blank"
+  rel="noopener noreferrer"
+  class="flex flex-col items-center gap-2
+         text-gray-400 hover:text-orange-500 transition"
+>
+  <span>Email</span>
+  <i class="fa-solid fa-envelope text-2xl"></i>
+</a>
+
+
+
+
 
         </div>
 
@@ -106,7 +112,11 @@
                      px-4 py-3 rounded-md text-sm
                      focus:outline-none focus:border-orange-500"
             />
-
+<!-- NAME ERROR -->
+<p *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.invalid"
+   class="text-red-400 text-xs mt-1">
+  Name is required
+</p>
             <input
               type="email"
               placeholder="Your Email"
@@ -116,6 +126,20 @@
                      focus:outline-none focus:border-orange-500"
             />
 
+<p *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.errors"
+   class="text-red-400 text-xs mt-1">
+
+  <span *ngIf="contactForm.get('email')?.errors?.['required']">
+    Email is required
+  </span>
+
+  <span *ngIf="contactForm.get('email')?.errors?.['email']">
+    Enter a valid email address
+  </span>
+
+</p>
+
+
             <textarea
               rows="4"
               placeholder="Your Message"
@@ -124,16 +148,55 @@
                      px-4 py-3 rounded-md text-sm
                      focus:outline-none focus:border-orange-500 resize-none"
             ></textarea>
+            <p *ngIf="contactForm.get('message')?.touched && contactForm.get('message')?.invalid"
+   class="text-red-400 text-xs mt-1">
+  Message is required
+</p>
+
+<div class="mt-6">
+  <div
+    class="g-recaptcha"
+    data-sitekey="6LdsFTwsAAAAAK2Sug_A5FWFGa377rK2r8SQbaR3"
+    data-callback="onCaptchaResolved">
+  </div>
+
+  <p *ngIf="captchaError" class="text-red-400 text-xs mt-2">
+    Please verify you are not a robot
+  </p>
+</div>
+
 
           </div>
 
-          <button
-            type="submit"
-            class="mt-6 bg-orange-500 hover:bg-orange-600
-                   text-black font-semibold px-6 py-3 rounded-md transition"
-          >
-            Send Message
-          </button>
+          <button type="submit"
+  [disabled]="isLoading"
+  class="mt-6 bg-orange-500 hover:bg-orange-600
+         text-black font-semibold px-6 py-3 rounded-md
+         transition flex items-center justify-center gap-2
+         disabled:opacity-60 disabled:cursor-not-allowed"
+>
+  <!-- Normal Text -->
+  <span *ngIf="!isLoading">Send Message</span>
+
+  <!-- Spinner -->
+  <span *ngIf="isLoading"
+        class="w-5 h-5 border-2 border-black
+               border-t-transparent rounded-full animate-spin">
+  </span>
+</button>
+
+          <!-- SUCCESS MESSAGE -->
+<p *ngIf="successMessage"
+   class="mt-4 text-green-400 text-sm">
+  {{ successMessage }}
+</p>
+
+<!-- ERROR MESSAGE -->
+<p *ngIf="errorMessage"
+   class="mt-4 text-red-400 text-sm">
+  {{ errorMessage }}
+</p>
+
 
         </form>
       </div>

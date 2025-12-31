@@ -1,44 +1,53 @@
 
 <nav
   [class.nav-scrolled]="isScrolled"
-  class="fixed top-0 left-0 w-full
+  class="fixed top-0 left-0 w-full z-50
+         flex items-center justify-between
+         h-12 sm:h-14 lg:h-16
          px-4 sm:px-6 lg:px-[80px]
-         py-5 lg:py-6
-         flex justify-between items-center
-         text-gray-300 z-50
-         transition-all duration-300">
+         text-gray-300
+         transition-all duration-300"
+>
+
+
 
 
 
 
     <!-- Logo -->
-    <div class="text-white font-bold text-lg">
-      Santhoshkumar Raman
-    </div>
+   <div class="text-white font-bold text-sm sm:text-lg leading-none">
+  Santhoshkumar Raman
+</div>
 
-    <!-- Desktop Menu -->
-    <ul class="hidden md:flex gap-8">
-      <li><a href="#home" class="hover:text-orange-400">Home</a></li>
-      <li><a href="#about" class="hover:text-orange-400">About</a></li>
-      <li><a href="#projects" class="hover:text-orange-400">Projects</a></li>
-      <li><a href="#contact" class="hover:text-orange-400">Contact</a></li>
-    </ul>
 
-    <!-- Mobile Menu Button -->
-    <button
-      class="md:hidden text-white text-2xl"
-      (click)="toggleMenu()">
-      ☰
-    </button>
+   
+
+   <ul class="hidden md:flex gap-8 items-center">
+  <li><a class="nav-link relative hover:text-orange-400" href="#home">Home</a></li>
+  <li><a class="nav-link relative hover:text-orange-400" href="#about">About</a></li>
+  <li><a class="nav-link relative hover:text-orange-400" href="#projects">Projects</a></li>
+  <li><a class="nav-link relative hover:text-orange-400" href="#contact">Contact</a></li>
+</ul>
+
+
+ <button
+  class="md:hidden text-lg leading-none"
+  (click)="toggleMenu()">
+  ☰
+</button>
+
+
+
   </nav>
 
   <!-- Mobile Menu -->
   <div
   *ngIf="menuOpen()"
-  class="fixed top-[72px] left-0 w-full
+  class="fixed top-12 sm:top-14 left-0 w-full
          bg-gray-950/95 backdrop-blur
          px-4 py-6
          md:hidden z-50">
+
 
 
     <div class="flex flex-col gap-5 text-gray-300">
