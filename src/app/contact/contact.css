@@ -1,12 +1,58 @@
-/* reCAPTCHA mobile fix */
 .recaptcha-wrapper {
-  transform: scale(1);
+  transform-origin: left center;
+}
+
+/* small phones */
+@media (max-width: 360px) {
+  .recaptcha-wrapper { transform: scale(0.78); }
+}
+
+/* normal phones */
+@media (max-width: 420px) {
+  .recaptcha-wrapper { transform: scale(0.85); }
+}
+
+/* tablets */
+@media (max-width: 768px) {
+  .recaptcha-wrapper { transform: scale(0.95); }
+}
+/* ===== reCAPTCHA Responsive Fix ===== */
+.recaptcha-wrapper {
+  display: inline-block;
   transform-origin: center;
 }
 
-/* Mobile screens */
-@media (max-width: 400px) {
+/* Small mobiles */
+@media (max-width: 360px) {
+  .recaptcha-wrapper {
+    transform: scale(0.78);
+  }
+}
+
+/* Medium mobiles */
+@media (max-width: 420px) {
   .recaptcha-wrapper {
     transform: scale(0.85);
+  }
+}
+
+/* Large mobiles */
+@media (max-width: 480px) {
+  .recaptcha-wrapper {
+    transform: scale(0.9);
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .recaptcha-wrapper {
+    transform: scale(0.95);
+  }
+}
+
+/* Desktop */
+@media (min-width: 769px) {
+  .recaptcha-wrapper {
+    transform: scale(1);
   }
 }

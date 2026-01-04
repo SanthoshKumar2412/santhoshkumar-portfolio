@@ -11,6 +11,7 @@ nav {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
 }
 
+/* Links */
 .nav-link {
   position: relative;
   line-height: 1;
@@ -21,6 +22,7 @@ nav {
   position: absolute;
   width: 0;
   height: 2px;
+  left: 0;
   bottom: -6px;
   left: 0;
   background-color: #f97316;

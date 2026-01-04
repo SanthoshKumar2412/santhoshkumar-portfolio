@@ -45,5 +45,88 @@ html {
 }
 
 :root {
-  scroll-padding-top: 96px;
+  scroll-padding-top: 64px; /* matches lg navbar height */
 }
+
+@media (max-width: 640px) {
+  :root {
+    scroll-padding-top: 56px; /* mobile navbar height */
+  }
+}
+
+
+@media (max-width: 640px) {
+  .section {
+    padding-top: 4rem;
+    padding-bottom: 3rem;
+  }
+}
+.section {
+  padding-top: 5rem;
+  padding-bottom: 4rem;
+  scroll-margin-top: 64px; /* desktop navbar height */
+}
+@media (max-width: 640px) {
+  .section {
+    padding-top: 4rem;
+    padding-bottom: 3rem;
+    scroll-margin-top: 56px; /* mobile navbar height */
+  }
+}
+
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+@media (min-width: 1024px) {
+  #home.section {
+    padding-bottom: calc(5rem + 26px);
+  }
+}
+#contact {
+  scroll-margin-top: 56px; /* slightly smaller than others */
+}
+@media (min-width: 1024px) {
+  #contact {
+    scroll-margin-top: 1px;
+  }
+}
+
+
+@media (min-width: 1024px) {
+  #contact {
+    scroll-margin-top: 1px;
+  }
+}
+/* === Global Social Icon Style === */
+.social-icon {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  display: inline-block;
+  vertical-align: middle;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.social-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: #9ca3af; /* gray-400 */
+  text-decoration: none;
+}
+
+.social-link:hover {
+  color: #f97316; /* orange-500 */
+}
+
+.social-link:hover .social-icon {
+  transform: translateY(-2px);
+}
+
+
+
+
+

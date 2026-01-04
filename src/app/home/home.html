@@ -1,12 +1,13 @@
-<!-- HOME PAGE WRAPPER -->
-<div class="bg-[#0b1620] text-white overflow-hidden">
+<section
+  id="home"
+  class="section bg-[#0b1620] overflow-x-hidden flex items-center">
 
-  <!-- ================= HERO SECTION ================= -->
-  <section id="home" class="min-h-screen flex items-center justify-center ">
-    <div
-      class="max-w-7xl mx-auto w-full px-6 lg:px-20
-             grid grid-cols-1 lg:grid-cols-2 gap-14 items-center"
-    >
+
+  <div
+    class="max-w-7xl mx-auto w-full px-6 lg:px-20
+           grid grid-cols-1 lg:grid-cols-2 gap-14 items-center"
+  >
+  
 
       <!-- LEFT CONTENT -->
       <div class="text-center lg:text-left">
@@ -54,17 +55,18 @@
 
 
         <!-- TECH STACK ROW -->
-        <div
-          class="mt-10 flex flex-wrap justify-center lg:justify-start
-                 gap-6 text-gray-400 text-sm"
-        >
-          <span>Java</span>
-          <span>Spring Boot</span>
-          <span>Angular</span>
-          <span>Tailwind CSS</span>
-          <span>Node.js</span>
-          <span>Git</span>
-        </div>
+        <ul
+  class="mt-10 flex flex-wrap justify-center lg:justify-start
+         gap-6 text-gray-400 text-sm"
+>
+  <li>Java</li>
+  <li>Spring Boot</li>
+  <li>Angular</li>
+  <li>Tailwind CSS</li>
+  <li>Node.js</li>
+  <li>Git</li>
+</ul>
+
       </div>
 
       <!-- RIGHT IMAGE -->
@@ -111,18 +113,23 @@
                  lg:w-[420px] lg:h-[420px]
                  -translate-y-5">
 
-          <img
-            src="/photos.png"
-            alt="Profile"
-            class="max-h-[380px] lg:max-h-[500px] w-auto"
-          />
+        <img
+  src="/photos.png"
+  alt="Profile"
+  loading="eager"
+  fetchpriority="high"
+  decoding="async"
+  width="408"
+  height="612"
+  class="max-h-[380px] lg:max-h-[500px] w-auto"
+/>
+
         </div>
 
       </div>
 
     </div>
   </section>
-</div>
 
 
 
