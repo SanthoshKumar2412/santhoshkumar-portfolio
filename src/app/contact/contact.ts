@@ -23,7 +23,7 @@ export class Contact implements AfterViewInit {
   captchaError = false;
 
   // 🔴 CHANGE ONLY THIS URL AFTER DEPLOY
-  API_URL = 'https://santhoshkumar-dev-portfolio.netlify.app/api/contact';
+  API_URL = 'https://santhosh-portfolio-backend.onrender.com/api/contact';
 
   constructor(
     private fb: FormBuilder,
@@ -40,52 +40,56 @@ export class Contact implements AfterViewInit {
     this.renderCaptcha();
   }
 
-  renderCaptcha() {
-    setTimeout(() => {
-      if (typeof grecaptcha !== 'undefined') {
-        grecaptcha.render(
-          document.querySelector('.g-recaptcha'),
-          {
-            sitekey: '6LdWAEAsAAAAAAtCUMJUBNm-lEOSkC4oGRoeh8iK',
-            callback: (token: string) => {
-              this.captchaToken = token;
-              this.captchaError = false;
-            }
+renderCaptcha() {
+  setTimeout(() => {
+    if (typeof grecaptcha !== 'undefined' && !this.captchaToken) {
+      grecaptcha.render(
+        document.querySelector('.g-recaptcha'),
+        {
+          sitekey: '6LdWAEAsAAAAAAtCUMJUBNm-lEOSkC4oGRoeh8iK',
+          callback: (token: string) => {
+            this.captchaToken = token;
+            this.captchaError = false;
           }
-        );
-      }
-    }, 500);
-  }
-
-  submitForm() {
-    if (this.contactForm.invalid || !this.captchaToken) {
-      this.contactForm.markAllAsTouched();
-      this.captchaError = !this.captchaToken;
-      return;
-    }
-
-    this.isLoading = true;
-
-    const payload = {
-      ...this.contactForm.value,
-      recaptcha: this.captchaToken
-    };
-
-    this.http.post(this.API_URL, payload, { responseType: 'text' })
-      .subscribe({
-        next: () => {
-          this.successMessage = 'Message sent successfully!';
-          this.contactForm.reset();
-          this.isLoading = false;
-          grecaptcha.reset();
-          this.captchaToken = '';
-        },
-        error: () => {
-          this.errorMessage = 'Server error. Try again later.';
-          this.isLoading = false;
-          grecaptcha.reset();
-          this.captchaToken = '';
         }
-      });
+      );
+    }
+  }, 500);
+}
+
+
+ submitForm() {
+  if (this.contactForm.invalid || !this.captchaToken) {
+    this.contactForm.markAllAsTouched();
+    this.captchaError = !this.captchaToken;
+    return;
   }
+
+  this.isLoading = true;
+  this.successMessage = '';
+  this.errorMessage = '';
+
+  const payload = {
+    ...this.contactForm.value,
+    recaptcha: this.captchaToken
+  };
+
+  this.http.post(this.API_URL, payload, { responseType: 'text' })
+    .subscribe({
+      next: () => {
+        this.successMessage = 'Message sent successfully!';
+        this.contactForm.reset();
+        this.isLoading = false;
+        grecaptcha.reset();
+        this.captchaToken = '';
+      },
+      error: () => {
+        this.errorMessage = 'Unable to send message. Server unreachable.';
+        this.isLoading = false;
+        grecaptcha.reset();
+        this.captchaToken = '';
+      }
+    });
+}
+
 }
