@@ -1,12 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  Validators,
-  ReactiveFormsModule,
-  FormGroup
-} from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { Component, AfterViewInit } from '@angular/core';
+import { FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 declare var grecaptcha: any;
 
@@ -15,9 +10,9 @@ declare var grecaptcha: any;
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './contact.html',
-  styleUrl: './contact.css',
+  styleUrls: ['./contact.css']
 })
-export class Contact implements OnInit {
+export class Contact implements AfterViewInit {
 
   contactForm: FormGroup;
   successMessage = '';
@@ -27,6 +22,9 @@ export class Contact implements OnInit {
   captchaToken = '';
   captchaError = false;
 
+  // 🔴 CHANGE ONLY THIS URL AFTER DEPLOY
+  API_URL = 'https://santhoshkumar-dev-portfolio.netlify.app/api/contact';
+
   constructor(
     private fb: FormBuilder,
     private http: HttpClient
@@ -34,70 +32,60 @@ export class Contact implements OnInit {
     this.contactForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      message: ['', Validators.required],
+      message: ['', Validators.required]
     });
   }
 
-  ngOnInit() {
-    // Called by Google reCAPTCHA
-    (window as any).onCaptchaResolved = (token: string) => {
-      this.captchaToken = token;
-      this.captchaError = false;
-    };
+  ngAfterViewInit() {
+    this.renderCaptcha();
   }
 
- submitForm() {
-  if (this.contactForm.invalid || !this.captchaToken) {
-    this.contactForm.markAllAsTouched();
-    this.captchaError = !this.captchaToken;
-    return;
-  }
-
-  this.isLoading = true;
-  this.successMessage = '';
-  this.errorMessage = '';
-
-  const payload = {
-    ...this.contactForm.value,
-    recaptcha: this.captchaToken
-  };
-
-  this.http.post(
-    'http://localhost:8080/api/contact',
-    payload,
-    { responseType: 'text' }
-  ).subscribe({
-    next: () => {
-      this.successMessage = 'Message sent successfully!';
-      this.contactForm.reset();
-      this.isLoading = false;
-
+  renderCaptcha() {
+    setTimeout(() => {
       if (typeof grecaptcha !== 'undefined') {
-        grecaptcha.reset();
+        grecaptcha.render(
+          document.querySelector('.g-recaptcha'),
+          {
+            sitekey: '6LdWAEAsAAAAAAtCUMJUBNm-lEOSkC4oGRoeh8iK',
+            callback: (token: string) => {
+              this.captchaToken = token;
+              this.captchaError = false;
+            }
+          }
+        );
       }
-      this.captchaToken = '';
-    },
-
-   error: (err) => {
-
-  if (err.status === 400) {
-   
-    this.errorMessage = err.error || 'Invalid input';
-  }
-  else if (err.status === 429) {
-    this.errorMessage = 'Too many messages. Please wait 1 minute.';
-  }
-  else {
-    this.errorMessage = 'Server error. Please try again later.';
+    }, 500);
   }
 
-  this.isLoading = false;
+  submitForm() {
+    if (this.contactForm.invalid || !this.captchaToken) {
+      this.contactForm.markAllAsTouched();
+      this.captchaError = !this.captchaToken;
+      return;
+    }
 
-  if (typeof grecaptcha !== 'undefined') {
-    grecaptcha.reset();
+    this.isLoading = true;
+
+    const payload = {
+      ...this.contactForm.value,
+      recaptcha: this.captchaToken
+    };
+
+    this.http.post(this.API_URL, payload, { responseType: 'text' })
+      .subscribe({
+        next: () => {
+          this.successMessage = 'Message sent successfully!';
+          this.contactForm.reset();
+          this.isLoading = false;
+          grecaptcha.reset();
+          this.captchaToken = '';
+        },
+        error: () => {
+          this.errorMessage = 'Server error. Try again later.';
+          this.isLoading = false;
+          grecaptcha.reset();
+          this.captchaToken = '';
+        }
+      });
   }
-  this.captchaToken = '';
 }
-
-  });
- }}
