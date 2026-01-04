@@ -228,25 +228,14 @@
 
 
 <div class="mt-6 flex justify-center">
-  <div class="recaptcha-wrapper">
-    <div
-      class="g-recaptcha"
-      data-sitekey="6LdWAEAsAAAAAAtCUMJUBNm-lEOSkC4oGRoeh8iK"
-      data-callback="onCaptchaResolved">
-    </div>
+  <div class="recaptcha-container">
+    <div class="g-recaptcha"></div>
   </div>
 </div>
 
 <p *ngIf="captchaError" class="text-red-400 text-xs mt-2 text-center">
   Please verify you are not a robot
 </p>
-
-
-<p *ngIf="captchaError" class="text-red-400 text-xs mt-2 text-center">
-  Please verify you are not a robot
-</p>
-
-
 
           </div>
 
