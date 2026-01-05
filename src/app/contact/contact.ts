@@ -3,7 +3,7 @@ import { FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angula
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
-declare var grecaptcha: any;
+
 
 @Component({
   selector: 'app-contact',
@@ -19,9 +19,6 @@ export class Contact implements AfterViewInit {
   errorMessage = '';
   isLoading = false;
 
-  captchaToken = '';
-  captchaError = false;
-
   // 🔴 CHANGE ONLY THIS URL AFTER DEPLOY
   API_URL = 'https://santhosh-portfolio-backend.onrender.com/api/contact';
 
@@ -35,33 +32,14 @@ export class Contact implements AfterViewInit {
       message: ['', Validators.required]
     });
   }
-
-  ngAfterViewInit() {
-    this.renderCaptcha();
+  ngAfterViewInit(): void {
+    throw new Error('Method not implemented.');
   }
-
-renderCaptcha() {
-  setTimeout(() => {
-    if (typeof grecaptcha !== 'undefined' && !this.captchaToken) {
-      grecaptcha.render(
-        document.querySelector('.g-recaptcha'),
-        {
-          sitekey: '6LdWAEAsAAAAAAtCUMJUBNm-lEOSkC4oGRoeh8iK',
-          callback: (token: string) => {
-            this.captchaToken = token;
-            this.captchaError = false;
-          }
-        }
-      );
-    }
-  }, 500);
-}
 
 
  submitForm() {
-  if (this.contactForm.invalid || !this.captchaToken) {
+  if (this.contactForm.invalid ) {
     this.contactForm.markAllAsTouched();
-    this.captchaError = !this.captchaToken;
     return;
   }
 
@@ -69,25 +47,16 @@ renderCaptcha() {
   this.successMessage = '';
   this.errorMessage = '';
 
-  const payload = {
-    ...this.contactForm.value,
-    recaptcha: this.captchaToken
-  };
-
-  this.http.post(this.API_URL, payload, { responseType: 'text' })
+  this.http.post(this.API_URL, { responseType: 'text' })
     .subscribe({
       next: () => {
         this.successMessage = 'Message sent successfully!';
         this.contactForm.reset();
         this.isLoading = false;
-        grecaptcha.reset();
-        this.captchaToken = '';
       },
       error: () => {
         this.errorMessage = 'Unable to send message. Server unreachable.';
         this.isLoading = false;
-        grecaptcha.reset();
-        this.captchaToken = '';
       }
     });
 }
