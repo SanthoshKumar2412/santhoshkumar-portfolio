@@ -1,9 +1,7 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-
-
+import emailjs from 'emailjs-com';
 
 @Component({
   selector: 'app-contact',
@@ -12,53 +10,58 @@ import { CommonModule } from '@angular/common';
   templateUrl: './contact.html',
   styleUrls: ['./contact.css']
 })
-export class Contact implements AfterViewInit {
+export class Contact {
 
   contactForm: FormGroup;
+  isLoading = false;
   successMessage = '';
   errorMessage = '';
-  isLoading = false;
 
-  // 🔴 CHANGE ONLY THIS URL AFTER DEPLOY
-  API_URL = 'https://santhosh-portfolio-backend.onrender.com/api/contact';
-
-  constructor(
-    private fb: FormBuilder,
-    private http: HttpClient
-  ) {
+  constructor(private fb: FormBuilder) {
     this.contactForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      message: ['', Validators.required]
+      message: ['', Validators.required],
     });
   }
-  ngAfterViewInit(): void {
-    throw new Error('Method not implemented.');
-  }
 
+  submitForm() {
+    if (this.contactForm.invalid) {
+      this.contactForm.markAllAsTouched();
+      return;
+    }
 
- submitForm() {
-  if (this.contactForm.invalid ) {
-    this.contactForm.markAllAsTouched();
-    return;
-  }
+    this.isLoading = true;
+    this.successMessage = '';
+    this.errorMessage = '';
 
-  this.isLoading = true;
-  this.successMessage = '';
-  this.errorMessage = '';
+    const formData = {
+      ...this.contactForm.value,
+      website: '' // 🕵️ Honeypot (spam protection)
+    };
 
-  this.http.post(this.API_URL, { responseType: 'text' })
-    .subscribe({
-      next: () => {
-        this.successMessage = 'Message sent successfully!';
-        this.contactForm.reset();
-        this.isLoading = false;
-      },
-      error: () => {
-        this.errorMessage = 'Unable to send message. Server unreachable.';
-        this.isLoading = false;
-      }
+    emailjs.send(
+      import.meta.env['VITE_EMAILJS_SERVICE_ID'],
+      import.meta.env['VITE_EMAILJS_ADMIN_TEMPLATE'],
+      formData,
+      import.meta.env['VITE_EMAILJS_PUBLIC_KEY']
+    )
+    .then(() => {
+      return emailjs.send(
+        import.meta.env['VITE_EMAILJS_SERVICE_ID'],
+        import.meta.env['VITE_EMAILJS_REPLY_TEMPLATE'],
+        formData,
+        import.meta.env['VITE_EMAILJS_PUBLIC_KEY']
+      );
+    })
+    .then(() => {
+      this.successMessage = 'Message sent successfully!';
+      this.contactForm.reset();
+      this.isLoading = false;
+    })
+    .catch(() => {
+      this.errorMessage = 'Failed to send message. Please try again later.';
+      this.isLoading = false;
     });
-}
-
+  }
 }

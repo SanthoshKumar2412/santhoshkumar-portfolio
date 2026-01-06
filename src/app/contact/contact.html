@@ -167,101 +167,97 @@
 
       </div>
 
-      <!-- RIGHT : FORM -->
-      <div class="flex">
-        <form
-          [formGroup]="contactForm"
-          (ngSubmit)="submitForm()"
-          class="bg-[#182329] rounded-xl p-6 flex flex-col w-full"
-        >
+    <div class="flex">
+  <form
+    [formGroup]="contactForm"
+    (ngSubmit)="submitForm()"
+    class="bg-[#182329] rounded-xl p-6 flex flex-col w-full"
+  >
 
-          <div class="space-y-5 flex-1">
+    <!-- Honeypot (hidden) -->
+    <input
+      type="text"
+      formControlName="website"
+      tabindex="-1"
+      autocomplete="off"
+      class="hidden"
+    />
 
-            <input
-              type="text"
-              placeholder="Your Name"
-              formControlName="name"
-              class="w-full bg-transparent border border-white/10
-                     px-4 py-3 rounded-md text-sm
-                     focus:outline-none focus:border-orange-500"
-            />
-<!-- NAME ERROR -->
-<p *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.invalid"
-   class="text-red-400 text-xs mt-1">
-  Name is required
-</p>
-            <input
-              type="email"
-              placeholder="Your Email"
-              formControlName="email"
-              class="w-full bg-transparent border border-white/10
-                     px-4 py-3 rounded-md text-sm
-                     focus:outline-none focus:border-orange-500"
-            />
+    <div class="space-y-5 flex-1">
 
-<p *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.errors"
-   class="text-red-400 text-xs mt-1">
+      <!-- Name -->
+      <input
+        type="text"
+        placeholder="Your Name"
+        formControlName="name"
+        class="w-full bg-transparent border border-white/10
+               px-4 py-3 rounded-md text-sm
+               focus:outline-none focus:border-orange-500"
+      />
+      <p *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.invalid"
+         class="text-red-400 text-xs">
+        Name must be at least 2 characters
+      </p>
 
-  <span *ngIf="contactForm.get('email')?.errors?.['required']">
-    Email is required
-  </span>
+      <!-- Email -->
+      <input
+        type="email"
+        placeholder="Your Email"
+        formControlName="email"
+        class="w-full bg-transparent border border-white/10
+               px-4 py-3 rounded-md text-sm
+               focus:outline-none focus:border-orange-500"
+      />
+      <p *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.invalid"
+         class="text-red-400 text-xs">
+        Enter a valid email address
+      </p>
 
-  <span *ngIf="contactForm.get('email')?.errors?.['email']">
-    Enter a valid email address
-  </span>
+      <!-- Message -->
+      <textarea
+        rows="4"
+        placeholder="Your Message"
+        formControlName="message"
+        class="w-full bg-transparent border border-white/10
+               px-4 py-3 rounded-md text-sm resize-none
+               focus:outline-none focus:border-orange-500"
+      ></textarea>
+      <p *ngIf="contactForm.get('message')?.touched && contactForm.get('message')?.invalid"
+         class="text-red-400 text-xs">
+        Message must be at least 10 characters
+      </p>
 
-</p>
+    </div>
 
+    <!-- Submit -->
+    <button
+      type="submit"
+      [disabled]="isLoading"
+      aria-label="Send contact message"
+      class="mt-6 bg-orange-500 hover:bg-orange-600
+             text-black font-semibold px-6 py-3 rounded-md
+             transition flex items-center justify-center gap-2
+             disabled:opacity-60"
+    >
+      <span *ngIf="!isLoading">Send Message</span>
+      <span *ngIf="isLoading"
+            class="w-5 h-5 border-2 border-black
+                   border-t-transparent rounded-full animate-spin">
+      </span>
+    </button>
 
-            <textarea
-              rows="4"
-              placeholder="Your Message"
-              formControlName="message"
-              class="w-full bg-transparent border border-white/10
-                     px-4 py-3 rounded-md text-sm
-                     focus:outline-none focus:border-orange-500 resize-none"
-            ></textarea>
-            <p *ngIf="contactForm.get('message')?.touched && contactForm.get('message')?.invalid"
-   class="text-red-400 text-xs mt-1">
-  Message is required
-</p>
+    <!-- Messages -->
+    <p *ngIf="successMessage" class="mt-4 text-green-400 text-sm">
+      {{ successMessage }}
+    </p>
 
-          </div>
+    <p *ngIf="errorMessage" class="mt-4 text-red-400 text-sm">
+      {{ errorMessage }}
+    </p>
 
-          <button type="submit"
-          aria-label="Send contact message"
-  [disabled]="isLoading"
-  class="mt-6 bg-orange-500 hover:bg-orange-600
-         text-black font-semibold px-6 py-3 rounded-md
-         transition flex items-center justify-center gap-2
-         disabled:opacity-60 disabled:cursor-not-allowed"
->
-  <!-- Normal Text -->
-  <span *ngIf="!isLoading">Send Message</span>
+  </form>
+</div>
 
-  <!-- Spinner -->
-  <span *ngIf="isLoading"
-    aria-hidden="true"
-        class="w-5 h-5 border-2 border-black
-               border-t-transparent rounded-full animate-spin">
-  </span>
-</button>
-
-          <!-- SUCCESS MESSAGE -->
-<p *ngIf="successMessage"
-   class="mt-4 text-green-400 text-sm">
-  {{ successMessage }}
-</p>
-
-<!-- ERROR MESSAGE -->
-<p *ngIf="errorMessage"
-   class="mt-4 text-red-400 text-sm">
-  {{ errorMessage }}
-</p>
-
-
-        </form>
-      </div>
 
     </div> <!-- END GRID -->
 
